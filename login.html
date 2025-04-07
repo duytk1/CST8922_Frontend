@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/config.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h2>Multidisciplinary Project Request Platform</h2>
+        <div class="school-info">
+            <div>Algonquin College</div>
+            <div>School of Advanced Technology</div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="describe-section">
+            <p>Welcome to our Multi-disciplinary Project Platform. Submit your project proposals and collaborate with our talented students and expert faculty.</p>
+            <ul class="feature-list">
+                <li>Submit and manage your project proposals</li>
+                <li>Collaborate with multidisciplinary student teams</li>
+                <li>Get expert guidance from faculty advisors</li>
+                <li>Monitor project development and outcomes</li>
+            </ul>
+        </div>
+        <div class="form-container">
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+                <div class="divider"></div>
+                <div class="register-link">
+                    Don't have an account? <a href="signup.html">Sign-up now</a>
+                </div>
+            </form>
+            <div id="message" class="message-container"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Algonquin College - School of Advanced Technology. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const userData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    localStorage.setItem('token', userData.token);
+                    localStorage.setItem('userInfo', JSON.stringify({
+                        id: userData.userId,
+                        email: userData.email,
+                        firstName: userData.firstName,
+                        lastName: userData.lastName,
+                        type: userData.type
+                    }));
+                    clearForm();
+                    document.getElementById('message').innerHTML = '<p class="success">Login successful!</p>';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    throw new Error('Invalid username or password.\nPlease try again.');
+                }
+            } catch (error) {
+                document.getElementById('message').innerHTML = `<p class="error">${error.message.replace('\n', '<br>')}</p>`;
+            }
+        });
+
+        function clearForm() {
+            document.getElementById('loginForm').reset();
+            document.getElementById('message').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
