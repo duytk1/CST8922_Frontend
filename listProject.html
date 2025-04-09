@@ -59,7 +59,7 @@
         });
 
         async function loadProjectsByOrganization(organizationId) {
-            const apiUrl = `http://localhost:8080/api/project/organization/${organizationId}`;
+            const apiUrl = `${API_BASE_URL}/project/organization/${organizationId}`;
     
             try {
                 const response = await fetch(apiUrl, {
@@ -101,7 +101,7 @@
         }
 
         async function printProjects() {
-            const apiUrl = 'http://localhost:8080/api/project';
+            const apiUrl = `${API_BASE_URL}/project`;
             
             try {
                 const response = await fetch(apiUrl, {
