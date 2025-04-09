@@ -1,0 +1,51 @@
+# Node and frontend cache/temp files
+node_modules/
+dist/
+*.log
+npm-debug.log*
+
+# Mac/Windows/Linux system files
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional)
+.vscode/
+
+# Environment and config files
+.env
+.env.*
+
+# Docker
+*.tar
+*.img
+docker-compose.override.yml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+terraform.tfvars
+override.tf
+override.tf.json
+.terraform.lock.hcl
+
+# Azure CLI and credentials (safety!)
+.azure/
+
+# Config file (optional, if overridden in prod)
+config.json
+
+# Logs
+logs/
+*.log
+
+# Ignore backup or temp files
+*.bak
+*.swp
+*.tmp
+*~
+
+# Python (if used for scripts)
+__pycache__/
+*.py[cod]
